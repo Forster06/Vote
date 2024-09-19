@@ -3,21 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real-Time Voting with Google Charts</title>
+    <title>Hello multer</title>
+	<title>Real-Time Voting with Google Charts</title>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
+		
         // Load the Google Charts library
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
 
         // Function to draw the chart
-        function drawChart(voteData = [['Number', 'Votes'], ['Number 1', 0], ['Number 2', 0], ['Number 3', 0], ['Number 4', 0], ['Number 5', 0], ['Number 6', 0], ['Number 7', 0], ['Number 8', 0], ['Number 9', 0], ['Number 10', 0], ['Number 11', 0], ['Number 12', 0], ['Number 13', 0], ['Number 14', 0], ['Number 15', 0], ['Number 16', 0], ['Number 17', 0], ['Number 18', 0], ['Number 19', 0], ['Number 20', 0], ['Number 21', 0], ['Number 22', 0], ['Number 23', 0], ['Number 24', 0], ['Number 25', 0], ['Number 26', 0], ['Number 27', 0]]) {
+        function drawChart(voteData = [['Option', 'Votes'], ['Option 1', 0], ['Option 2', 0]]) {
             var data = google.visualization.arrayToDataTable(voteData);
 
             var options = {
-                title: 'Real-Time Voting',
-                hAxis: {title: 'หมายเลข', minValue: 0, maxValue: 15},
-                vAxis: {title: 'คะแนนโหวต', minValue: 0, maxValue: 15},
+                title: 'Voting Results',
+                hAxis: {title: 'Options', minValue: 0, maxValue: 15},
+                vAxis: {title: 'Votes', minValue: 0, maxValue: 15},
                 legend: 'none'
             };
 
@@ -27,59 +29,56 @@
 
         // Function to handle vote submission
         function submitVote(option) {
-            // Simulated voting data - replace with your backend integration
-            voteData.forEach(row => {
-                if (row[0] === option) {
-                    row[1] += 1;
-                }
-            });
-            drawChart(voteData);
+			// Simulated voting data - replace with your backend integration
+					
+			if(isVote == false){
+				voteData.forEach(row => {
+						if (row[0] === option) {
+							row[1] += 1;
+						}
+					});
+				drawChart(voteData);
+				isVote = true; 
+				alert("การลงคะแนนสำเร็จ: ");
+			}
+			else{
+				alert("คุณได้ลงคะแนนแล้ว ไม่สามารถลงคะแนนซ้ำได้");
+			}
+					
         }
-
+		var isVote = false;
         // Initial vote data
-        var voteData = [['Number', 'Votes'], ['Number 1', 0], ['Number 2', 0], ['Number 3', 0], ['Number 4', 0], ['Number 5', 0], ['Number 6', 0], ['Number 7', 0], ['Number 8', 0], ['Number 9', 0], ['Number 10', 0], ['Number 11', 0], ['Number 12', 0], ['Number 13', 0], ['Number 14', 0], ['Number 15', 0], ['Number 16', 0], ['Number 17', 0], ['Number 18', 0], ['Number 19', 0], ['Number 20', 0], ['Number 21', 0], ['Number 22', 0], ['Number 23', 0], ['Number 24', 0], ['Number 25', 0], ['Number 26', 0], ['Number 27', 0]];
+        var voteData = [['Option', 'Votes'], ['Option 1', 0], ['Option 2', 0]];
 
         // Example: Update chart every 2 seconds with simulated data
         setInterval(() => {
             drawChart(voteData);
         }, 2000);
+
+        function checkIfVoted() {
+            return localStorage.getItem('hasVoted') === 'true';
+        }
+
+        function castVote(option) {
+            if (checkIfVoted()) {
+                alert("คุณได้ลงคะแนนแล้ว ไม่สามารถลงคะแนนซ้ำได้");
+            } else {
+                // บันทึกการลงคะแนนใน Local Storage
+                localStorage.setItem('hasVoted', 'true');
+                alert("การลงคะแนนสำเร็จ: " + option);
+                // ที่นี่คุณสามารถส่งข้อมูลการลงคะแนนไปยังเซิร์ฟเวอร์ได้
+            }
+        }
     </script>
+	
 </head>
 <body>
-    <center><h1>การประกวดชุด Recycle ในตรีม Colorful Fancy</h1></center>
-    <div id="chart_div" style="width: 1600px; height: 800px;"></div>
-	<p>
-	<button onclick="submitVote('Number 1')">หมายเลข 1 นายปิณัฐกูณ มหานิน</button>
-    <button onclick="submitVote('Number 2')">หมายเลข 2 นายปัถย์ เสน่หา</button>
-	<button onclick="submitVote('Number 3')">หมายเลข 3 นายบุญยกร มานะกิจ</button>
-    <button onclick="submitVote('Number 4')">หมายเลข 4 นายชยณัฐวีร์ ฤทธิ์ระแหง</button>
-	<button onclick="submitVote('Number 5')">หมายเลข 5 นายธิติวัฒน์ วิเชียรปัญญา</button>
-    <button onclick="submitVote('Number 6')">หมายเลข 6 นายนาเคนทร์ ไพรพนัด</button>
-	<button onclick="submitVote('Number 7')">หมายเลข 7 นายบุญยกร มานะกิจ</button>
-    <button onclick="submitVote('Number 8')">หมายเลข 8 นายกรพันธุ์ รัตนโชติ</button>
-	<button onclick="submitVote('Number 9')">หมายเลข 9 นายชานน ฉ่ำคำ</button>
-	<button onclick="submitVote('Number 10')">หมายเลข 10 นายศุภชัย นนทะนำ</button>
-	</p>
-	<p>
-	<button onclick="submitVote('Number 11')">หมายเลข 11 นายจิตติพัฒน์ เบญทิพย์</button>
-    <button onclick="submitVote('Number 12')">หมายเลข 12 นายนาเคนทร์ ไพรพนัด</button>
-	<button onclick="submitVote('Number 13')">หมายเลข 13 นายวิรัชสัณห์ ศรีอำพันธุ์</button>
-    <button onclick="submitVote('Number 14')">หมายเลข 14 นายณัฏฐภูมิ นาคราช</button>
-	<button onclick="submitVote('Number 15')">หมายเลข 15 นายชินวัตร อุทาหงส์ำ</button>
-	<button onclick="submitVote('Number 16')">หมายเลข 16 นายรชตวรรธณ์ รุจิยาปนนท์</button>
-    <button onclick="submitVote('Number 17')">หมายเลข 17 นายธนพล คำสอน</button>
-	<button onclick="submitVote('Number 18')">หมายเลข 18 นางสาวอัจฉพรรณี แรมทองหลาง</button>
-    <button onclick="submitVote('Number 19')">หมายเลข 19 นางสาวปนิดา แสงทอง</button>
-	<button onclick="submitVote('Number 20')">หมายเลข 20 นางสาวศศิธร ใจเขียว</button>
-	</p>
-    <p>
-	<button onclick="submitVote('Number 21')">หมายเลข 21 นางสาวปรารถนา สันเต๊ะ</button>
-	<button onclick="submitVote('Number 22')">หมายเลข 22 นางสาวผกาวรรณ แพงศรี</button>
-    <button onclick="submitVote('Number 23')">หมายเลข 23 นายพงศกร ครอบดอน</button>
-	<button onclick="submitVote('Number 24')">หมายเลข 24 นางสาวกัญญาวีร์ สามกั๊ก</button>
-	<button onclick="submitVote('Number 25')">หมายเลข 25 นางสาวณัชชา เล็กคง</button>
-	<button onclick="submitVote('Number 26')">หมายเลข 26 นางสาวกัญญาวีร์ สามกั๊ก</button>
-	<button onclick="submitVote('Number 27')">หมายเลข 27 นายภากร หัตถยะ</button>
-	</p>
+	
+	<h1>Real-Time Voting</h1>
+    <div id="chart_div" style="width: 1500px; height: 500px;"></div>
+    <button onclick="submitVote('Option 1')">Vote for Option 1</button>
+    <button onclick="submitVote('Option 2')">Vote for Option 2</button>
+	<button onclick="castVote('Option 1')">Option 1</button>
+    <button onclick="castVote('Option 2')">Option 2</button>
 </body>
 </html>
